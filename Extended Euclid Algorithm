@@ -12,7 +12,7 @@ vector<ll>funct(ll a, ll b) {
 	ll gcd=result[2];
 	ll X=yn;
 	ll Y=xn-(a/b)*yn;
-	return {X,Y};
+	return {X,Y,gcd};
 }
 int main() {
 	ios::sync_with_stdio(false);
