@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+// Extended Euclidean Algorithm
+// returns {x, y, gcd} such that a*x + b*y = gcd(a,b)
+vector<ll> extendedEuci(ll a, ll b) {
+    if (b == 0) {
+        return {1, 0, a};
+    }
+    vector<ll> result = extendedEuci(b, a % b);
+    ll x1 = result[0];
+    ll y1 = result[1];
+    ll gcd = result[2];
+
+    ll x = y1;
+    ll y = x1 - (a / b) * y1;
+    return {x, y, gcd};
+}
+
+// Solves a*x + b*y = c
+bool linearDiophantine(ll a, ll b, ll c, ll &x, ll &y, ll &g) {
+    vector<ll> res = extendedEuci(abs(a), abs(b));
+    ll x0 = res[0], y0 = res[1];
+    g = res[2];
+
+    if (c % g != 0) return false; // No solution exists
+
+    // scale the solution
+    x0 *= c / g;
+    y0 *= c / g;
+
+    // fix signs if a or b were negative
+    if (a < 0) x0 = -x0;
+    if (b < 0) y0 = -y0;
+
+    x = x0;
+    y = y0;
+    return true;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll a, b, c;
+    cout << "Enter a, b, c for ax + by = c : ";
+    cin >> a >> b >> c;
+
+    ll x, y, g;
+    if (linearDiophantine(a, b, c, x, y, g)) {
+        cout << "One solution: x = " << x << ", y = " << y << "\n";
+        cout << "General solution: \n";
+        cout << "x = " << x << " + k * " << (b / g) << "\n";
+        cout << "y = " << y << " - k * " << (a / g) << "\n";
+    } else {
+        cout << "No solution exists.\n";
+    }
+
+    return 0;
+}
