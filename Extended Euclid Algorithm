@@ -1,0 +1,26 @@
+// extended euclid algorithm
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+vector<ll>funct(ll a, ll b) {
+	if(b==0) {
+		return {1,0,a}; // {x,y,gcd}
+	}
+	vector<ll>result=funct(b,a%b);
+	ll xn=result[0];
+	ll yn=result[1];
+	ll gcd=result[2];
+	ll X=yn;
+	ll Y=xn-(a/b)*yn;
+	return {X,Y};
+}
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	ll a, b;
+	cin>>a>>b;
+	// u have to find solution of ax+by=gcd(a,b)
+	vector<ll>arr=funct(a,b);
+	cout<<"X"<<" "<<arr[0]<<" "<<"Y"<<" "<<arr[1]<<" "<<"GCD"<<arr[2];
+
+}
