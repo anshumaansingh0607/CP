@@ -1,0 +1,41 @@
+// euler totient function - how many number which is less than n 
+//and coprime to n
+// tc==O(log log (n))
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const ll N =1e5+1;
+ll sieve[N];
+void primesieve(){
+      fill(sieve, sieve + N, 1); 
+    sieve[0]=sieve[1]=0;
+    for(ll i=2;i<N;i++){
+        if(sieve[i]==1){
+            for(ll j=i*i;j<N;j+=i){
+                sieve[j]=0;
+            }
+        }
+    }
+}
+void eulertotient(){
+    primesieve();
+    vector<ll>totient(N);
+    iota(totient.begin(),totient.end(),0);
+    for(ll i=2;i<N;i++){
+        if(sieve[i]==1){
+            for(ll j=i;j<N;j+=i){
+                totient[j]/=i;
+                totient[j]*=(i-1);
+            }
+        }
+        
+    }
+    	 for (int i = 1; i <= 10; i++) {
+		cout << i << " " << totient[i] << '\n';
+	 }
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    eulertotient();
+}
