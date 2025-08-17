@@ -1,0 +1,24 @@
+// Binary Modular Exponentiation (a^b % mod)
+// Time Complexity: O(log b)
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long int
+const int mod=1e9+7;
+int binaryExponential(int a, int b){
+    int res=1;
+    while(b>0){
+        if(b&1){
+            res*=a;
+            res=res%mod;
+        }
+        a=a*a,a=a%mod;
+        b/=2;
+    }
+    return res;
+}
+int32_t main(){
+    int a,b;
+    cin>>a>>b;
+    int ans=binaryExponential(a,b);
+    cout<<ans<<endl;
+}
