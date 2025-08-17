@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+const int mod = 5;
+
+// Fast modular exponentiation (a^b % mod)
+int powm(int a, int b) {
+    int res = 1;
+    a %= mod;
+    while (b > 0) {
+        if (b & 1) res = (res * a) % mod;
+        a = (a * a) % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+// Modular inverse using Fermat's Little Theorem
+// Works only if mod is prime
+int invm(int b) {
+    return powm(b, mod - 2);
+}
+
+// Modular arithmetic operations
+int addm(int a, int b) {
+    return ((a % mod + b % mod) % mod + mod) % mod;
+}
+
+int subm(int a, int b) {
+    return ((a % mod - b % mod) % mod + mod) % mod;
+}
+
+int mulm(int a, int b) {
+    return ((a % mod * b % mod) % mod + mod) % mod;
+}
+
+int divm(int a, int b) {
+    return (a % mod * invm(b)) % mod;
+}
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int a, b;
+    cin >> a >> b;
+
+    cout << "Add: " << addm(a, b) << "\n";
+    cout << "Sub: " << subm(a, b) << "\n";
+    cout << "Mul: " << mulm(a, b) << "\n";
+    if (b % mod != 0) // division valid only if b not divisible by mod
+        cout << "Div: " << divm(a, b) << "\n";
+    else
+        cout << "Div: not defined\n";
+}
