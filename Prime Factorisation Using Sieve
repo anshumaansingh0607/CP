@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6;
+vector<int> sieve(N+1);
+
+void primesieve(vector<int>& sieve){
+    for(int i = 0; i <= N; i++) sieve[i] = i;
+
+    for(long long i = 2; i * i <= N; i++){
+        if(sieve[i] == i){ // i is prime
+            for(long long j = i * i; j <= N; j += i){
+                if(sieve[j] == j)
+                    sieve[j] = i;
+            }
+        }
+    }
+}
+
+int main(){
+    primesieve(sieve);
+
+    int n;
+    cin >> n;
+
+    vector<int> arr;
+    while(n > 1){
+        arr.push_back(sieve[n]);
+        n /= sieve[n];
+    }
+
+    for(auto it : arr){
+        cout << it << " ";
+    }
+    cout << endl;
+}
